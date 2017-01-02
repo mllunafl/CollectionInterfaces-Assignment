@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -14,7 +15,7 @@ public class Main {
         //removeTicket();
         //System.out.println(ticketQueue);
 
-        while (true){
+        while (true) {
             addTickets();
             System.out.println("New Tickets" + ticketQueue);
             Thread.sleep(900l);
@@ -24,25 +25,29 @@ public class Main {
         }
     }
 
-    private static void addTickets(){
+    private static void addTickets() {
         int count = random.nextInt(10);
 
-            for (int i = 1; i < count; i++) {
-                Ticket ticket = new Ticket();
-                ticket.setName("" + System.currentTimeMillis());
-                ticket.setPriority(random.nextInt(10));
-                ticketQueue.add(ticket);
+        for (int i = 1; i < count; i++) {
+            Ticket ticket = new Ticket();
+            ticket.setName("" + System.currentTimeMillis());
+            ticket.setPriority(random.nextInt(10));
+            ticketQueue.add(ticket);
 
-            }
+        }
 
     }
 
     private static void removeTicket() {
         if (ticketQueue.peek() != null) {
             int count = random.nextInt(10);
+            Iterator<Ticket> iterator = ticketQueue.iterator();
             for (int i = 1; i < count; i++) {
-                Ticket ticket = ticketQueue.remove();
-                System.out.println(ticket);
+                if (iterator.hasNext()) {
+                    Ticket next = iterator.next();
+                    iterator.remove();
+                    System.out.println("removed " + next);
+                }
             }
         }
     }
